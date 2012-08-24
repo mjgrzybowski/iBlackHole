@@ -23,7 +23,7 @@ function Controller(doc) {
 
     this.bindTouchEvents = function () {
         this.doc.addEventListener("touchstart", this.touchEvent(this));
-        this.doc.addEventListener("touchend", this.touchEvent(this));
+   //     this.doc.addEventListener("touchend", this.touchEvent(this)); lepiej tak bo przy edzie nieladnie przesuwa pozycje
         this.doc.addEventListener("touchmove", this.touchEvent(this));
     };
 
@@ -89,8 +89,9 @@ function Controller(doc) {
                     ctrl.renderer.clearPin();
                     ctrl.renderer.drawPinCircle(ctrl.trajectories[0].pin.pos);
                     
-					ctrl.trajectories[0].points.future = new Array();
-                    ctrl.trajectories[0].solver.computeFuturePoints(100);
+			//		ctrl.trajectories[0].points.future = new Array();
+                    ctrl.trajectories[0].solver.computeFuturePoints(500);
+                    ctrl.trajectories[0].solver.computePastPoints(500);
                     ctrl.renderer.drawTrajectory(ctrl.trajectories[0]);
                 }
                 else if ( ctrl.dragMode == "setVel" )
@@ -111,8 +112,9 @@ function Controller(doc) {
                     ctrl.renderer.clearPin();
 					
                     ctrl.renderer.drawPinArrow(ctrl.trajectories[0].pin);
-                    ctrl.trajectories[0].points.future = new Array();
-                    ctrl.trajectories[0].solver.computeFuturePoints(100);
+       //             ctrl.trajectories[0].points.future = new Array();
+                    ctrl.trajectories[0].solver.computeFuturePoints(500);
+                    ctrl.trajectories[0].solver.computePastPoints(500);
                     ctrl.renderer.drawTrajectory(ctrl.trajectories[0]);
 					
 

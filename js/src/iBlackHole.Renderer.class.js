@@ -140,13 +140,22 @@ function Renderer(controller) {
         ctx.stroke();
 
         if( trajectory.points.future.length > 1 ) {
-            console.log("rysujemy!");
             this.strokeInvPolarPath(
                 trajectory.points.future,
                 ctx,
                 {
                     lineWidth: 1,
-                    lineColor: "#999999"
+                    lineColor: "#ffffff"
+                }
+            )
+        }
+        if( trajectory.points.past.length > 1 ) {
+            this.strokeInvPolarPath(
+                trajectory.points.past,
+                ctx,
+                {
+                    lineWidth: 1,
+                    lineColor: "#777777"
                 }
             )
         }
@@ -162,7 +171,7 @@ function Renderer(controller) {
       //  console.log(); // tu
         pnt = this.world2screenCord(this.invPolar2cartCord(points[0]));
         ctx.moveTo(pnt.x, pnt.y);
-        for(i = 1; i < len; i++) {
+        for(i = 1; i < len && points[i].u > 0; i++) {
             pnt = this.world2screenCord(this.invPolar2cartCord(points[i]));
             ctx.lineTo(pnt.x, pnt.y)    //maybe points, maybe some spline
         };

@@ -13,6 +13,7 @@ function Trajectory(pin,renderer){
         E: undefined,   // energy;              currently unsupported
         vPerp: undefined, // perpendicular velocity
         vPerpSgn: undefined,
+        vRadialSgn: undefined,
         aInvSq: undefined,   // aInvSq = 1/(a*a);       a = L / (m * c);         for photons aInvSq = 0
         bInvSq: undefined   // bInvSq = 1/(b*b);       b = L * c / E;           c = 1
     };
@@ -21,8 +22,12 @@ function Trajectory(pin,renderer){
         this.pars.pos0.cart = this.renderer.screen2worldCord(this.pin.pos);
         this.pars.pos0.polar = this.renderer.cart2invPolarCord(this.pars.pos0.cart);
 
-        this.pars.vPerp = this.pin.v * Math.sin ((this.pin.alpha - this.pars.pos0.polar.phi));
+        this.pars.vPerp = this.pin.v * Math.sin (this.pin.alpha - this.pars.pos0.polar.phi);
         this.pars.vPerpSgn = this.pars.vPerp > 0 ? 1 : -1;
+        this.pars.vRadialSgn = Math.cos(this.pin.alpha - this.pars.pos0.polar.phi) > 0 ? 1 : -1;
+
+        this.points.past = [ this.pars.pos0.polar ];
+        this.points.future = [ this.pars.pos0.polar ];
 
 		$('p.cnsl').html(
             'pin.alpha: '+this.pin.alpha+
@@ -32,8 +37,8 @@ function Trajectory(pin,renderer){
 
 		//this.pars.vPerp = this.pin.v * Math.sin (-1*Math.PI/2);
 		
-        this.pars.aInvSq = 0*(1 - this.pin.v) * Math.pow( 1 / this.pars.vPerp, 2);
-        this.pars.bInvSq = 1 / Math.pow(( 1/this.pars.pos0.polar.u )* this.pars.vPerp, 2);
+        this.pars.aInvSq = (1 - this.pin.v * this.pin.v ) / Math.pow(this.pars.vPerp, 2);
+        this.pars.bInvSq = 1 / Math.pow(( 1/this.pars.pos0.polar.u )* this.pars.vPerp, 2); // poprawic?
     }
     this.setPosition = function(pos){
         this.pin.pos.x = pos.x;

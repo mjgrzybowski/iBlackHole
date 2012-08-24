@@ -1,95 +1,44 @@
 function Solver(trajectory) {
     this.trajectory = trajectory;
-	this.computed = {past:false,future:false};
+	this.computed = {past:false, future:false};
+    this.vRadialSgnTmp = undefined;     // changes sign when bounced
     this.computeFuturePoints = function(n){
+        this.vRadialSgnTmp = this.trajectory.pars.vRadialSgn;
         for (i = 0; i < n ; i++)
         {
-            this.computePoint(true);
-
+            this.computePoint(+1);
         }
 
     };
     this.computePastPoints = function(n){
+        this.vRadialSgnTmp = - this.trajectory.pars.vRadialSgn;
         for (i = 0; i < n ; i++)
         {
-            this.computePoint(false);
+            this.computePoint(-1);
         }
     };
-    this.computePoint = function(isFuture){
-        var dPhi = 2 * Math.PI / 360;   // initial step size
-		workData = isFuture ? this.trajectory.points.future : this.trajectory.points.past;
-		var l = workData.length;
-		
-		
-		if (l > 0)
-		{
-		
-		var lastPoint = workData[l-1];
-		
-		}
-		else
-		{
-		workData.push( this.trajectory.pars.pos0.polar );
-		
-		            if(Math.sin(this.trajectory.pin.alpha - this.trajectory.pars.pos0.polar.phi)>0)
-                    {
-                         this.trajectory.goingInside = false;
-                    }
-                    else
-                    {
-                        this.trajectory.goingInside = true;
-                    }
-					
-					var lastPoint = workData[0];
-		}
+    this.computePoint = function(directionOfRotation){
+		currentTrajectory = directionOfRotation == +1 ? this.trajectory.points.future : this.trajectory.points.past;
+  //      var vRadialSgn = this.trajectory.pars.vRadialSgn;   // changes sign when bounced
+        var dPhi =  2 * Math.PI / 360;   // initial step size
+        var dirOfRot = directionOfRotation * this.trajectory.pars.vPerpSgn; // if clockwise or counterclockwise
 
+        var len = currentTrajectory.length;
+        var lastPoint = currentTrajectory[len - 1];
 
-	//	console.log('ilosc punktow:' + l + 'znaleziony last point');		
-		
-	//	console.log('lpu: ' + lastPoint.u)
-        pp = this.trajectory.pars.bInvSq - (lastPoint.u * lastPoint.u) * (1 - this.trajectory.renderer.controller.rs*lastPoint.u);
-		
-	//	console.log('testaaa');	
-		
-		        if(pp<0)
-                {
-                    if( this.trajectory.goingInside )
-                    {
-                        this.trajectory.goingInside = false;
-                    }
-                    else
-                    {
-                        this.trajectory.goingInside = true;
-                    }
-                    pp = -pp;
-                }
+        var integrandSq =  ( this.trajectory.pars.bInvSq
+            - (lastPoint.u * lastPoint.u) * (1 - this.trajectory.renderer.controller.rs * lastPoint.u));
+        // integrandSq = (du / dphi)^2;     na razie bez "aInvSq
+        // uwaga, może dodać minus
+        if( integrandSq < 0 ){  // bounce!
+            integrandSq = - integrandSq;
+            this.vRadialSgnTmp = - this.vRadialSgnTmp
+        }
+        var dU = - this.vRadialSgnTmp * Math.sqrt(integrandSq) * dPhi
 
-                if( this.trajectory.goingInside){
-                    dU = Math.sqrt(pp) * dPhi;
-                }
-                else
-                {
-                    dU = -1*Math.sqrt(pp) * dPhi;
-                }
-		
-		
-		
-		     //   if(Math.abs(lastPoint.u)>Math.abs(dU))
-             //   {
-                workData.push({
-                    u:lastPoint.u + dU,
-                    phi:lastPoint.phi + dPhi
+        currentTrajectory.push({
+                u: lastPoint.u + dU,                    //  sometimes u gets negative but then renderer deals with it
+                phi: lastPoint.phi + dirOfRot * dPhi
                 });
-				
-				//this.trajectory.points.future =  workData;
-				
-            //    }
-            //    else
-            //    {
-            //        this.computed[isFuture?'future':'past']=true;
-            //    }
-
-
-		
 	};
 }
