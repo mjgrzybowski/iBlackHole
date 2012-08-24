@@ -33,10 +33,9 @@ function Renderer(controller) {
             y: (wpos.y + this.dimensions.height/2 + this.offset.y) * this.zoom
         };
     };
-    this.cart2polarCord = function (cpos) {
+    this.cart2invPolarCord = function (cpos) {
         return {
-            r: Math.sqrt((cpos.x*cpos.x) + (cpos.y*cpos.y)),
-            u: 1/Math.sqrt((cpos.x*cpos.x) + (cpos.y*cpos.y)),
+            u: 1/Math.sqrt((cpos.x*cpos.x) + (cpos.y*cpos.y)), // u = 1/r
             phi: Math.atan2(cpos.x,cpos.y)
         };
     };
@@ -109,5 +108,7 @@ function Renderer(controller) {
         ctx.arc(trajectory.pin.pos.x, trajectory.pin.pos.y, 5, 0, 2 * Math.PI, false);
         ctx.fillStyle = trajectory.color;
         ctx.fill();
+        // here we will have some strzaleczka drawing
+
     }
 }

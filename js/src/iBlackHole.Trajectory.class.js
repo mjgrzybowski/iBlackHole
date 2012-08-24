@@ -18,7 +18,7 @@ function Trajectory(pin,renderer){
     this.updatePars = function(){
 
         this.pars.pos0.cart = this.renderer.screen2worldCord(this.pin.pos);
-        this.pars.pos0.polar = this.renderer.cart2polarCord(this.pars.pos0.cart);
+        this.pars.pos0.polar = this.renderer.cart2invPolarCord(this.pars.pos0.cart);
 
         this.pars.vPerp = this.pin.v * Math.sin (this.pin.alpha - this.pars.pos0.polar.phi);
 
