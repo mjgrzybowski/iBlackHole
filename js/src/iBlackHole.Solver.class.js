@@ -18,7 +18,7 @@ function Solver(trajectory) {
 		var workData = this.isFuture ? this.trajectory.points.futre : this.trajectory.points.past;
 		l = workData.length;
 		
-		console.log('ilosc punktow:' + l);
+		//console.log('ilosc punktow:' + l);
 		
 		if (l>0)
 		{
@@ -43,12 +43,12 @@ function Solver(trajectory) {
 		}
 		var dPhi = 2 * Math.PI / 360;
 
-		console.log('ilosc punktow:' + l + 'znaleziony last point');		
+		//console.log('ilosc punktow:' + l + 'znaleziony last point');		
 		
-		console.log('lpu: ' + lastPoint.u)
+		//console.log('lpu: ' + lastPoint.u)
         pp = this.trajectory.pars.bInvSq - (lastPoint.u * lastPoint.u) * (1 - this.trajectory.renderer.controller.rs*lastPoint.u);
 		
-		console.log('testaaa');	
+		//console.log('testaaa');	
 		
 		        if(pp<0)
                 {
@@ -72,7 +72,7 @@ function Solver(trajectory) {
                 }
 		
 		
-			console.log(lastPoint.phi);
+			//console.log(lastPoint.phi);
 		
 		     //   if(Math.abs(lastPoint.u)>Math.abs(dU))
              //   {
