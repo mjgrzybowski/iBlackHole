@@ -105,6 +105,9 @@ function Controller(doc) {
                     ctrl.renderer.clearPin();
                     ctrl.renderer.drawPinArrow(ctrl.trajectories[0].pin);
                     ctrl.renderer.drawTrajectory(ctrl.trajectories[0]);
+					
+					ctrl.trajectories[0].points.future = [];
+					ctrl.trajectories[0].solver.computeFuturePoints(100);
 
                 };
 

@@ -1,5 +1,6 @@
 function Trajectory(pin,renderer){
     this.renderer = renderer;
+	this.solver = new Solver(this);
     this.pin = pin;
     this.color = "#ffffff";
     this.points = {past: [], future: []};

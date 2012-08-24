@@ -1,15 +1,14 @@
-function Solver(trajectory,controller) {
+function Solver(trajectory) {
     this.trajectory = trajectory;
-	this.controller = controller;
 	this.computed = {past:false,future:false};
     this.computeFuturePoints = function(n){
-        for (i = 0, i < n , i++)
+        for (i = 0; i < n ; i++)
         {
             this.computePoint(true);
         }
     };
     this.computePastPoints = function(n){
-        for (i = 0, i < n , i++)
+        for (i = 0; i < n ; i++)
         {
             this.computePoint(false);
         }
@@ -24,11 +23,20 @@ function Solver(trajectory,controller) {
 		}
 		else
 		{
-		workData.push( u: this.trajectory.pars.pos0.polar );
+		workData.push( this.trajectory.pars.pos0.polar );
+		
+		            if(Math.tan(ray.pin.alpha)>0)
+                    {
+                         this.trajectory.goingInside = true;
+                    }
+                    else
+                    {
+                        this.trajectory.goingInside = false;
+                    }
 		}
 		var dPhi = 2 * Math.PI / 360;
 
-        pp = this.trajectory.pars.bInvSq - (lastPoint.u * lastPoint.u) * (1 - this.controller.rs*lastPoint.u);
+        pp = this.trajectory.pars.bInvSq - (lastPoint.u * lastPoint.u) * (1 - this.trajectory.renderer.controller.rs*lastPoint.u);
 		
 		        if(pp<0)
                 {
