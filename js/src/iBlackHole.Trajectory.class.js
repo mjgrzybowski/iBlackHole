@@ -11,9 +11,10 @@ function Trajectory(pin,renderer){
         },
         L: undefined,   // angular momentum;    currently unsupported
         E: undefined,   // energy;              currently unsupported
-        vPerp:undefined, // perpendicular velocity
+        vPerp: undefined, // perpendicular velocity
+        vPerpSgn: undefined,
         aInvSq: undefined,   // aInvSq = 1/(a*a);       a = L / (m * c);         for photons aInvSq = 0
-        bInvSq: undefined,   // bInvSq = 1/(b*b);       b = L * c / E;           c = 1
+        bInvSq: undefined   // bInvSq = 1/(b*b);       b = L * c / E;           c = 1
     };
     this.updatePars = function(){
 
@@ -21,8 +22,13 @@ function Trajectory(pin,renderer){
         this.pars.pos0.polar = this.renderer.cart2invPolarCord(this.pars.pos0.cart);
 
         this.pars.vPerp = this.pin.v * Math.sin ((this.pin.alpha - this.pars.pos0.polar.phi));
-		
-		$('p.cnsl').html('pin.alpha: '+this.pin.alpha+' </br> this.pars.pos0.polar.phi: ' +  this.pars.pos0.polar.phi );
+        this.pars.vPerpSgn = this.pars.vPerp > 0 ? 1 : -1;
+
+		$('p.cnsl').html(
+            'pin.alpha: '+this.pin.alpha+
+                '</br> this.pars.pos0.polar.phi: ' +  this.pars.pos0.polar.phi +
+                '</br> kat pomiedzy promieniem do dziury a V: ' +  (this.pin.alpha - this.pars.pos0.polar.phi)
+        );
 
 		//this.pars.vPerp = this.pin.v * Math.sin (-1*Math.PI/2);
 		

@@ -16,12 +16,12 @@ function Solver(trajectory) {
         }
     };
     this.computePoint = function(isFuture){
-
+        var dPhi = 2 * Math.PI / 360;   // initial step size
 		workData = isFuture ? this.trajectory.points.future : this.trajectory.points.past;
 		var l = workData.length;
 		
 		
-		if (l>0)
+		if (l > 0)
 		{
 		
 		var lastPoint = workData[l-1];
@@ -31,18 +31,18 @@ function Solver(trajectory) {
 		{
 		workData.push( this.trajectory.pars.pos0.polar );
 		
-		            if(Math.tan(this.trajectory.pin.alpha - this.trajectory.pars.pos0.polar.phi)>0)
+		            if(Math.sin(this.trajectory.pin.alpha - this.trajectory.pars.pos0.polar.phi)>0)
                     {
-                         this.trajectory.goingInside = true;
+                         this.trajectory.goingInside = false;
                     }
                     else
                     {
-                        this.trajectory.goingInside = false;
+                        this.trajectory.goingInside = true;
                     }
 					
 					var lastPoint = workData[0];
 		}
-		var dPhi = 2 * Math.PI / 360;
+
 
 	//	console.log('ilosc punktow:' + l + 'znaleziony last point');		
 		

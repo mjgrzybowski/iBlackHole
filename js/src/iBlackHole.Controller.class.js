@@ -81,12 +81,9 @@ function Controller(doc) {
                     else {
                         ctrl.dragMode = "setVel"
                     }
-					
-					
+
                 }
 
-				
-				
                 if ( ctrl.dragMode == "move" ) {
                     ctrl.trajectories[0].setPosition(posAdd(touchesPos[0],ctrl.fingerDiff));
                     ctrl.renderer.clearPin();

@@ -103,8 +103,8 @@ function Renderer(controller) {
         ctx.beginPath();
         ctx.moveTo(pin.pos.x, pin.pos.y);
         ctx.lineTo(
-            pin.pos.x + ( cR * pin.v * Math.sin( pin.alpha )),
-            pin.pos.y + ( cR * pin.v * Math.cos( pin.alpha ))
+            pin.pos.x + ( cR * pin.v * Math.cos( pin.alpha )),
+            pin.pos.y + ( cR * pin.v * Math.sin( pin.alpha ))
         );
         ctx.stroke();
         ctx.lineWidth = 1;
@@ -134,8 +134,8 @@ function Renderer(controller) {
         ctx.beginPath();
         ctx.moveTo(trajectory.pin.pos.x, trajectory.pin.pos.y);
         ctx.lineTo(
-            trajectory.pin.pos.x + ( cR * trajectory.pin.v * Math.sin( trajectory.pin.alpha )),
-            trajectory.pin.pos.y + ( cR * trajectory.pin.v * Math.cos( trajectory.pin.alpha ))
+            trajectory.pin.pos.x + ( cR * trajectory.pin.v * Math.cos( trajectory.pin.alpha )),
+            trajectory.pin.pos.y + ( cR * trajectory.pin.v * Math.sin( trajectory.pin.alpha ))
         );
         ctx.stroke();
 
