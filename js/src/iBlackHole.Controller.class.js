@@ -49,7 +49,7 @@ function Controller(doc) {
                 }
             }
 
-            l = touchesPos.length;
+            var l = touchesPos.length;
 
             if (l == 0) {
 //                ctrl.renderer.clearPin();
@@ -81,8 +81,12 @@ function Controller(doc) {
                     else {
                         ctrl.dragMode = "setVel"
                     }
+					
+					
                 }
 
+				
+				
                 if ( ctrl.dragMode == "move" ) {
                     ctrl.trajectories[0].setPosition(posAdd(touchesPos[0],ctrl.fingerDiff));
                     ctrl.renderer.clearPin();
@@ -91,6 +95,8 @@ function Controller(doc) {
                 }
                 else if ( ctrl.dragMode == "setVel" )
                 {
+				
+				
                     vNew = ctrl.vInitial
                         * ctrl.dist(touchesPos[0], ctrl.trajectories[0].pin.pos) / ctrl.fingerInitialLength
                     if (vNew > 1) { vNew = 1}
@@ -103,6 +109,7 @@ function Controller(doc) {
                    //  +   ctrl.fingerDiffAngle
                     );
                     ctrl.renderer.clearPin();
+					
                     ctrl.renderer.drawPinArrow(ctrl.trajectories[0].pin);
                     ctrl.trajectories[0].points.future = [];
                     ctrl.trajectories[0].solver.computeFuturePoints(100);
@@ -113,12 +120,15 @@ function Controller(doc) {
 
             }
 
+
 //            if (l > 1) {
 //                ctrl.trajectories[0].setVelocity(touchesPos[0]);
 //                ctrl.renderer.clearPin();
 //                ctrl.renderer.drawPinCircle(touchesPos[0]);
 //                ctrl.renderer.drawTrajectory(ctrl.trajectories[0])
 //            }
+
+
 
             if (l > 2) {
 
