@@ -135,7 +135,7 @@ function Renderer(controller) {
         ctx.beginPath();
         pnt = this.world2screenCord(this.invPolar2cartCord(points[0]));
         ctx.moveTo(pnt.x, pnt.y);
-        for(i = 1, i < len, i++) {
+        for(i = 1; i < len; i++) {
             pnt = this.world2screenCord(this.invPolar2cartCord(points[i]));
             ctx.lineTo(pnt.x, pnt.y)    //maybe points, maybe some spline
         };
