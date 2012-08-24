@@ -23,7 +23,7 @@ function Trajectory(pin,renderer){
         this.pars.vPerp = this.pin.v * Math.sin (this.pin.alpha - this.pars.pos0.polar.phi);
 
         this.pars.aInvSq = (1 - this.pin.v) * Math.pow( 1 / this.pars.vPerp, 2);
-        this.pars.bInvSq = 1 / Math.pow(this.pars.pos0.polar.r * this.pars.vPerp, 2);
+        this.pars.bInvSq = 1 / Math.pow(( 1/this.pars.pos0.polar.u )* this.pars.vPerp, 2);
     }
     this.setPosition = function(pos){
         this.pin.pos.x = pos.x;

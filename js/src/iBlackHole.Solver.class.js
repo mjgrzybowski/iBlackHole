@@ -14,18 +14,23 @@ function Solver(trajectory) {
         }
     };
     this.computePoint = function(isFuture){
-		workData = isFuture ? this.trajectory.points.futre : this.trajectory.points.past;
+	
+		var workData = this.isFuture ? this.trajectory.points.futre : this.trajectory.points.past;
 		l = workData.length;
+		
+		console.log('ilosc punktow:' + l);
 		
 		if (l>0)
 		{
-		lastPoint = workData[length-1];
+		
+		var lastPoint = workData[l-1];
+		
 		}
 		else
 		{
 		workData.push( this.trajectory.pars.pos0.polar );
 		
-		            if(Math.tan(ray.pin.alpha)>0)
+		            if(Math.tan(trajectory.pin.alpha)>0)
                     {
                          this.trajectory.goingInside = true;
                     }
@@ -33,10 +38,17 @@ function Solver(trajectory) {
                     {
                         this.trajectory.goingInside = false;
                     }
+					
+					var lastPoint = workData[0];
 		}
 		var dPhi = 2 * Math.PI / 360;
 
+		console.log('ilosc punktow:' + l + 'znaleziony last point');		
+		
+		console.log('lpu: ' + lastPoint.u)
         pp = this.trajectory.pars.bInvSq - (lastPoint.u * lastPoint.u) * (1 - this.trajectory.renderer.controller.rs*lastPoint.u);
+		
+		console.log('testaaa');	
 		
 		        if(pp<0)
                 {
@@ -59,17 +71,20 @@ function Solver(trajectory) {
                     dU = -1*Math.sqrt(pp) * dPhi;
                 }
 		
-		        if(Math.abs(lastPoint.sigma)>Math.abs(dSigma))
-                {
-                this.workData.push({
+		
+			console.log(lastPoint.phi);
+		
+		     //   if(Math.abs(lastPoint.u)>Math.abs(dU))
+             //   {
+                workData.push({
                     u:lastPoint.u + dU,
                     phi:lastPoint.phi + dPhi,
                 });
-                }
-                else
-                {
-                    this.computed[isFuture?'future':'past']=true;
-                }
+            //    }
+            //    else
+            //    {
+            //        this.computed[isFuture?'future':'past']=true;
+            //    }
 		
 	};
 }
