@@ -104,21 +104,21 @@ function Controller(doc) {
                     );
                     ctrl.renderer.clearPin();
                     ctrl.renderer.drawPinArrow(ctrl.trajectories[0].pin);
+                    ctrl.trajectories[0].points.future = [];
+                    ctrl.trajectories[0].solver.computeFuturePoints(100);
                     ctrl.renderer.drawTrajectory(ctrl.trajectories[0]);
 					
-					ctrl.trajectories[0].points.future = [];
-					ctrl.trajectories[0].solver.computeFuturePoints(100);
 
                 };
 
             }
 
-            if (l > 1) {
-                ctrl.trajectories[0].setVelocity(touchesPos[0]);
-                ctrl.renderer.clearPin();
-                ctrl.renderer.drawPinCircle(touchesPos[0]);
-                ctrl.renderer.drawTrajectory(ctrl.trajectories[0])
-            }
+//            if (l > 1) {
+//                ctrl.trajectories[0].setVelocity(touchesPos[0]);
+//                ctrl.renderer.clearPin();
+//                ctrl.renderer.drawPinCircle(touchesPos[0]);
+//                ctrl.renderer.drawTrajectory(ctrl.trajectories[0])
+//            }
 
             if (l > 2) {
 
