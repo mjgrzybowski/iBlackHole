@@ -39,6 +39,14 @@ function Renderer(controller) {
             phi: Math.atan2(cpos.x,cpos.y)
         };
     };
+
+    this.invPolar2cartCord = function (ipos) {
+        return {
+            x: Math.cos(ipos.phi) / ipos.u,
+            y: Math.sin(ipos.phi) / ipos.u
+        }
+    };
+
     this.drawBlackHole = function(rs){
         var ctx = this.contexts[0]
         ctx.lineWidth = 5;
@@ -108,7 +116,29 @@ function Renderer(controller) {
         ctx.arc(trajectory.pin.pos.x, trajectory.pin.pos.y, 5, 0, 2 * Math.PI, false);
         ctx.fillStyle = trajectory.color;
         ctx.fill();
+        this.strokeInvPolarPath(
+            trajectory.points.future,
+            ctx,
+            {
+                lineWidth: 1,
+                lineColor: "#999999"
+            }
+        )
         // here we will have some strzaleczka drawing
+    };
 
+    this.strokeInvPolarPath = function(points, ctx, options){
+        ctx.lineWidth = options.lineWidth;
+        ctx.strokeStyle = options.lineColor;
+        var len = points.length;
+        var pnt = undefined;
+        ctx.beginPath();
+        pnt = this.world2screenCord(this.invPolar2cartCord(points[0]));
+        ctx.moveTo(pnt.x, pnt.y);
+        for(i = 1, i < len, i++) {
+            pnt = this.world2screenCord(this.invPolar2cartCord(points[i]));
+            ctx.lineTo(pnt.x, pnt.y)    //maybe points, maybe some spline
+        };
+        ctx.stroke();
     }
 }
