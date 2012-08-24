@@ -75,6 +75,17 @@ function Renderer(controller) {
         this.contexts.push(this.canvases[n][0].getContext('2d'));
     };
 
+//    this.drawArrow(pt1, pt2, ctx, options){
+//        ctx.lineWidth = options.width;
+//        ctx.strokeStyle = options.color;
+//        ctx.fillStyle = options.color;
+//        ctx.moveTo(pt1.x, pt1.y);
+//        ctx.lineTo(tox, toy);
+//        ctx.lineTo(tox-headlen*Math.cos(angle-Math.PI/6),toy-headlen*Math.sin(angle-Math.PI/6));
+//        ctx.moveTo(tox, toy);
+//        ctx.lineTo(tox-headlen*Math.cos(angle+Math.PI/6),toy-headlen*Math.sin(angle+Math.PI/6));
+//    };
+
     this.drawPinCircle = function(pos){
         var ctx = this.contexts[1];
         ctx.lineWidth = 2;
@@ -116,6 +127,18 @@ function Renderer(controller) {
         ctx.arc(trajectory.pin.pos.x, trajectory.pin.pos.y, 5, 0, 2 * Math.PI, false);
         ctx.fillStyle = trajectory.color;
         ctx.fill();
+
+        var cR = 50;
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "#ffff00";
+        ctx.beginPath();
+        ctx.moveTo(trajectory.pin.pos.x, trajectory.pin.pos.y);
+        ctx.lineTo(
+            trajectory.pin.pos.x + ( cR * trajectory.pin.v * Math.sin( trajectory.pin.alpha )),
+            trajectory.pin.pos.y + ( cR * trajectory.pin.v * Math.cos( trajectory.pin.alpha ))
+        );
+        ctx.stroke();
+
         if( trajectory.points.future.length > 1 ) {
             console.log("rysujemy!");
             this.strokeInvPolarPath(
@@ -136,6 +159,7 @@ function Renderer(controller) {
         var len = points.length;
         var pnt = undefined;
         ctx.beginPath();
+      //  console.log(); // tu
         pnt = this.world2screenCord(this.invPolar2cartCord(points[0]));
         ctx.moveTo(pnt.x, pnt.y);
         for(i = 1; i < len; i++) {

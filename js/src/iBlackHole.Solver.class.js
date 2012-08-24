@@ -78,7 +78,7 @@ function Solver(trajectory) {
              //   {
                 workData.push({
                     u:lastPoint.u + dU,
-                    phi:lastPoint.phi + dPhi,
+                    phi:lastPoint.phi + dPhi
                 });
             //    }
             //    else

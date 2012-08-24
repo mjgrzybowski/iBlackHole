@@ -64,8 +64,8 @@ function Controller(doc) {
                 {
                     ctrl.fingerDiff = posSubtract(ctrl.trajectories[0].pin.pos,touchesPos[0]);
                     ctrl.fingerDiffAngle = Math.atan2(
-                            posSubtract(touchesPos[0], ctrl.trajectories[0].pin.pos).x,
-                            posSubtract(touchesPos[0], ctrl.trajectories[0].pin.pos).y
+                            posSubtract(touchesPos[0], ctrl.trajectories[0].pin.pos).y, // uwaga, czy pierwsze x czy y
+                            posSubtract(touchesPos[0], ctrl.trajectories[0].pin.pos).x
                         );
                         //- ctrl.trajectories[0].pin.alpha;
                     ctrl.fingerInitialLength = ctrl.dist(touchesPos[0], ctrl.trajectories[0].pin.pos);
@@ -103,8 +103,8 @@ function Controller(doc) {
                     ctrl.trajectories[0].setVelocity(
                         vNew,
                         Math.atan2(
-                            posSubtract(touchesPos[0], ctrl.trajectories[0].pin.pos).x,
-                            posSubtract(touchesPos[0], ctrl.trajectories[0].pin.pos).y
+                            posSubtract(touchesPos[0], ctrl.trajectories[0].pin.pos).y,
+                            posSubtract(touchesPos[0], ctrl.trajectories[0].pin.pos).x
                         )
                    //  +   ctrl.fingerDiffAngle
                     );
