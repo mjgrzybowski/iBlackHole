@@ -20,9 +20,13 @@ function Trajectory(pin,renderer){
         this.pars.pos0.cart = this.renderer.screen2worldCord(this.pin.pos);
         this.pars.pos0.polar = this.renderer.cart2invPolarCord(this.pars.pos0.cart);
 
-        this.pars.vPerp = this.pin.v * Math.sin (this.pin.alpha - this.pars.pos0.polar.phi);
+        this.pars.vPerp = this.pin.v * Math.sin ((this.pin.alpha - this.pars.pos0.polar.phi));
+		
+		$('p.cnsl').html('pin.alpha: '+this.pin.alpha+' </br> this.pars.pos0.polar.phi: ' +  this.pars.pos0.polar.phi );
 
-        this.pars.aInvSq = (1 - this.pin.v) * Math.pow( 1 / this.pars.vPerp, 2);
+		//this.pars.vPerp = this.pin.v * Math.sin (-1*Math.PI/2);
+		
+        this.pars.aInvSq = 0*(1 - this.pin.v) * Math.pow( 1 / this.pars.vPerp, 2);
         this.pars.bInvSq = 1 / Math.pow(( 1/this.pars.pos0.polar.u )* this.pars.vPerp, 2);
     }
     this.setPosition = function(pos){

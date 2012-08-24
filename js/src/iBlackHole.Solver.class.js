@@ -31,7 +31,7 @@ function Solver(trajectory) {
 		{
 		workData.push( this.trajectory.pars.pos0.polar );
 		
-		            if(Math.tan(trajectory.pin.alpha)>0)
+		            if(Math.tan(this.trajectory.pin.alpha - this.trajectory.pars.pos0.polar.phi)>0)
                     {
                          this.trajectory.goingInside = true;
                     }
