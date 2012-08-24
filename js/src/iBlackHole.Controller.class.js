@@ -91,6 +91,9 @@ function Controller(doc) {
                     ctrl.trajectories[0].setPosition(posAdd(touchesPos[0],ctrl.fingerDiff));
                     ctrl.renderer.clearPin();
                     ctrl.renderer.drawPinCircle(ctrl.trajectories[0].pin.pos);
+                    
+					ctrl.trajectories[0].points.future = new Array();
+                    ctrl.trajectories[0].solver.computeFuturePoints(100);
                     ctrl.renderer.drawTrajectory(ctrl.trajectories[0]);
                 }
                 else if ( ctrl.dragMode == "setVel" )
@@ -111,7 +114,7 @@ function Controller(doc) {
                     ctrl.renderer.clearPin();
 					
                     ctrl.renderer.drawPinArrow(ctrl.trajectories[0].pin);
-                    ctrl.trajectories[0].points.future = [];
+                    ctrl.trajectories[0].points.future = new Array();
                     ctrl.trajectories[0].solver.computeFuturePoints(100);
                     ctrl.renderer.drawTrajectory(ctrl.trajectories[0]);
 					
