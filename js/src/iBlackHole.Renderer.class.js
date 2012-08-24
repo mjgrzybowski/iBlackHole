@@ -116,15 +116,17 @@ function Renderer(controller) {
         ctx.arc(trajectory.pin.pos.x, trajectory.pin.pos.y, 5, 0, 2 * Math.PI, false);
         ctx.fillStyle = trajectory.color;
         ctx.fill();
-        console.log("pkt w traj: " + trajectory.points.future.length);
-        this.strokeInvPolarPath(
-            trajectory.points.future,
-            ctx,
-            {
-                lineWidth: 1,
-                lineColor: "#999999"
-            }
-        )
+        if( trajectory.points.future.length > 1 ) {
+            console.log("rysujemy!");
+            this.strokeInvPolarPath(
+                trajectory.points.future,
+                ctx,
+                {
+                    lineWidth: 1,
+                    lineColor: "#999999"
+                }
+            )
+        }
         // here we will have some strzaleczka drawing
     };
 
@@ -134,7 +136,6 @@ function Renderer(controller) {
         var len = points.length;
         var pnt = undefined;
         ctx.beginPath();
-        console.log("points w sipp: " + points);
         pnt = this.world2screenCord(this.invPolar2cartCord(points[0]));
         ctx.moveTo(pnt.x, pnt.y);
         for(i = 1; i < len; i++) {
