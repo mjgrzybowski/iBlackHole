@@ -36,7 +36,7 @@ function Renderer(controller) {
     this.cart2invPolarCord = function (cpos) {
         return {
             u: 1/Math.sqrt((cpos.x*cpos.x) + (cpos.y*cpos.y)), // u = 1/r
-            phi: Math.atan2(cpos.x,cpos.y)
+            phi: Math.atan2(cpos.y,cpos.x)  
         };
     };
 
