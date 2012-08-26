@@ -37,9 +37,12 @@ function Trajectory(pin,renderer){
 
 		//this.pars.vPerp = this.pin.v * Math.sin (-1*Math.PI/2);
 		
-        this.pars.aInvSq = (1 - this.pin.v * this.pin.v ) / Math.pow(this.pars.vPerp, 2);
-        this.pars.bInvSq = 1 / Math.pow(( 1/this.pars.pos0.polar.u )* this.pars.vPerp, 2); // poprawic?
-    }
+        this.pars.aInvSq = (1 - this.pin.v * this.pin.v ) / Math.pow(this.pars.vPerp, 2); // to też do ew rewizji...
+ //       this.pars.bInvSq = 1 / Math.pow(( 1/this.pars.pos0.polar.u )* this.pars.vPerp, 2); // poprawic? BYLO ZLE
+        this.pars.bInvSq = Math.pow(this.pars.pos0.polar.u, 2)
+            * ( Math.pow( this.pin.v / this.pars.vPerp, 2)  - this.pars.pos0.polar.u * this.renderer.controller.rs) // poprawione?
+        // trzeba bylo sprawdzic na placach predkosc katowa do radialnej z rownania; na razie moze tylko dla v=c (?)
+     }
     this.setPosition = function(pos){
         this.pin.pos.x = pos.x;
         this.pin.pos.y = pos.y;
