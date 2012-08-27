@@ -49,12 +49,51 @@ function Renderer(controller) {
 
     this.drawBlackHole = function(rs){
         var ctx = this.contexts[0]
-        ctx.lineWidth = 5;
+        ctx.lineWidth = 1;
         ctx.strokeStyle = "#00ff00";
         ctx.beginPath();
         var bHposition = this.world2screenCord({x:0, y:0});
         ctx.arc(bHposition.x, bHposition.y, this.zoom * rs, 0, 2 * Math.PI, false);
         ctx.stroke();
+    };
+
+    this.drawBlackHoleMetric = function(rs){
+        var ctx = this.contexts[0]
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "#004000";
+        var bHposition = this.world2screenCord({x:0, y:0});
+        var r  = 1.5 * rs;
+        var df = rs / 2;
+        for(i = 0; i < 40; i++){
+            ctx.beginPath();
+            ctx.arc(bHposition.x, bHposition.y, this.zoom * r, 0, 2 * Math.PI, false);
+            ctx.stroke();
+            r += df * (1 - rs / r);
+        };
+        var r  = 1.5 * rs;
+        for(i = 0; i < 5; i++){
+            r -= df * (1 - rs / r);
+            ctx.beginPath();
+            ctx.arc(bHposition.x, bHposition.y, this.zoom * r, 0, 2 * Math.PI, false);
+            ctx.stroke();
+        };
+        var radialLines = 16;
+        var dangle = (2 * Math.PI) / radialLines;
+        var angle = 0;
+        for(i = 0; i < radialLines; i++){
+            ctx.beginPath();
+            ctx.moveTo(
+                bHposition.x + rs * Math.cos(angle),
+                bHposition.y + rs * Math.sin(angle)
+            );
+            ctx.lineTo(
+                bHposition.x + 2000 * Math.cos(angle),
+                bHposition.y + 2000 * Math.sin(angle)
+            );
+            ctx.stroke();
+            angle +=  dangle
+        }
+
     };
 
     this.addCanvas = function(){

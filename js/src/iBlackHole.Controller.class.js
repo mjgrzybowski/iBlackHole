@@ -11,6 +11,7 @@ function Controller(doc) {
         this.bindTouchEvents();
         this.rs = 25;
         this.renderer.drawBlackHole(this.rs);
+        this.renderer.drawBlackHoleMetric(this.rs);
         this.trajectories.push(new Trajectory({
             pos: {x:200, y:200},
             v: 1,
